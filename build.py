@@ -26,8 +26,9 @@ if OVERLEAF.exists():
         shutil.rmtree(OVERLEAF, ignore_errors=True)
     else:
         OVERLEAF.unlink()
+        
 OVERLEAF.mkdir(exist_ok=True)
-
+PANDOC_DIR.mkdir(exist_ok=True)
     
 
 
