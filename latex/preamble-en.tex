@@ -1,0 +1,86 @@
+\usepackage{pdfpages}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage[section]{placeins}
+\usepackage{xeCJK}
+\usepackage{setspace}
+
+
+\usepackage[fontsize=12pt]{scrextend}
+
+% Centering all titles
+% https://tex.stackexchange.com/questions/310205/is-there-a-way-to-center-align-chapter-titles
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+    {\bfseries\centering}
+    {\huge Chapter \thechapter}{1em}
+    {\Huge}
+
+% uncomment the next two lines to place pagenumbers at the bottom-center position
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+
+% Eng font-family
+\setmainfont[
+  Path=latex/,
+  BoldFont={TimesNewRomanBold},
+  ItalicFont={TimesNewRomanItalic},
+  BoldItalicFont={TimesNewRomanBoldItalic}
+]{TimesNewRoman}
+
+% Trad Ch font-family
+\setCJKmainfont[Path=latex/,AutoFakeBold=2.5,AutoFakeSlant=.3]{kaiti}
+\setCJKmonofont[Path=latex/]{NotoSansMonoCJKtc}
+
+% Special font: IPA
+\newfontfamily{\ipa}[Path=latex/,AutoFakeBold=2.5,AutoFakeSlant=.3]{IPAfont} % Font for IPA symbols
+\DeclareTextFontCommand{\ipatext}{\ipa}
+
+\renewcommand{\figurename}{Figure}
+\renewcommand{\tablename}{Table}
+\renewcommand{\contentsname}{Table of Contents}
+%\renewcommand{\listfigurename}{}
+%\renewcommand{\listtablename}{}
+%\renewcommand{\bibname}{}
+
+% deal with nuts floating figures
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\topfraction}{0.8}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\floatpagefraction}{0.75}
+
+
+% Code chunk
+\usepackage{framed,color}
+\definecolor{shadecolor}{RGB}{248,248,248}
+
+\makeatletter
+\newenvironment{kframe}{%
+\medskip{}
+\setlength{\fboxsep}{.8em}
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\makeatletter
+\@ifundefined{Shaded}{
+}{\renewenvironment{Shaded}{\begin{kframe}}{\end{kframe}}}
+\@ifpackageloaded{fancyvrb}{%
+  % https://github.com/CTeX-org/ctex-kit/issues/331
+  \RecustomVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},formatcom=\xeCJKVerbAddon}%
+}{}
+\makeatother

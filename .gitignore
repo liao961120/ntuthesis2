@@ -1,0 +1,9 @@
+_bookdown_files
+*.Rproj.user
+*.fdb_latexmk
+*.fls
+*.log
+*.aux
+pandoc/*
+output/overleaf/*
+build-test.sh

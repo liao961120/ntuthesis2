@@ -1,0 +1,88 @@
+\usepackage{pdfpages}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage[section]{placeins}
+\usepackage{setspace}
+
+\usepackage[heading, fontset = none]{ctex}
+\ctexset{appendix/name={\appendixname\space}}
+
+\usepackage[fontsize=12pt]{scrextend}
+
+% 如果想將每頁的頁碼置於中間下方，uncomment 下兩行
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+
+% Eng font-family
+\setmainfont[
+  Path=latex/,
+  BoldFont={TimesNewRomanBold},
+  ItalicFont={TimesNewRomanItalic},
+  BoldItalicFont={TimesNewRomanBoldItalic}
+]{TimesNewRoman}
+
+% Trad Ch font-family
+\setCJKmainfont[Path=latex/,AutoFakeBold=2.5,AutoFakeSlant=.3]{kaiti}
+\setCJKmonofont[Path=latex/]{NotoSansMonoCJKtc}
+
+% Special font: IPA
+\newfontfamily{\ipa}[Path=latex/,AutoFakeBold=2.5,AutoFakeSlant=.3]{IPAfont} % Font for IPA symbols
+\DeclareTextFontCommand{\ipatext}{\ipa}
+
+
+%中文自動換行
+\XeTeXlinebreaklocale "zh"
+%文字的彈性間距
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+
+
+\renewcommand{\figurename}{圖}
+\renewcommand{\tablename}{表}
+\renewcommand{\contentsname}{目錄}
+\renewcommand{\listfigurename}{圖目錄}
+\renewcommand{\listtablename}{表目錄}
+\renewcommand{\appendixname}{附錄}
+%\renewcommand{\bibname}{參考資料}
+
+% deal with nuts floating figures
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\topfraction}{0.8}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\floatpagefraction}{0.75}
+
+
+% Code chunk
+\usepackage{framed,color}
+\definecolor{shadecolor}{RGB}{248,248,248}
+
+\makeatletter
+\newenvironment{kframe}{%
+\medskip{}
+\setlength{\fboxsep}{.8em}
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\makeatletter
+\@ifundefined{Shaded}{
+}{\renewenvironment{Shaded}{\begin{kframe}}{\end{kframe}}}
+\@ifpackageloaded{fancyvrb}{%
+  % https://github.com/CTeX-org/ctex-kit/issues/331
+  \RecustomVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},formatcom=\xeCJKVerbAddon}%
+}{}
+\makeatother
