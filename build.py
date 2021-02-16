@@ -1,13 +1,15 @@
-#%%
+# ToDo: Separate tex and pdf compile (md --> tex --> pdf), not direct compile pdf
+
 import os
+import re
+import time
 import shutil
 import zipfile
-import subprocess
 import platform
 import pathlib
-import urllib.request
-import zipfile
 import itertools
+import urllib.request
+
 
 PANDOC_VERSION = '2.8.1'
 PANDOC_DIR = pathlib.Path('./pandoc')
@@ -18,22 +20,12 @@ PANDOC_ZIP = {
     'Windows': "windows-x86_64.zip"
 }
 PLATFORM = platform.system()
-FRONT_MATTER_DIR = pathlib.Path("./front_matter")
-OVERLEAF = pathlib.Path('output/overleaf')
-
-if OVERLEAF.exists():
-    if OVERLEAF.isdir():
-        shutil.rmtree(OVERLEAF, ignore_errors=True)
-    else:
-        OVERLEAF.unlink()
-        
-OVERLEAF.mkdir(exist_ok=True)
+OUTDIR = pathlib.Path('output/')
+OUTDIR.mkdir(exist_ok=True)
 PANDOC_DIR.mkdir(exist_ok=True)
-    
 
 
 def main():
-
     if get_pandoc_path() != None:
         fp, _ = download_pandoc()
         unzip(fp)
@@ -43,34 +35,27 @@ def main():
     compile_frontmatter(pdf=False)
     compile_thesis(pdf=False)
 
-    # Create zip file for overlead upload
-    overleaf_zip()
-    
     # Compile to pdf
-    if exc_path("tlmgr") != '':
+    if exc_path("tlmgr") != None:
         compile_frontmatter(pdf=True)
+        time.sleep(5)
         compile_thesis(pdf=True)
+
+    # Create zip file for overlead upload
+    gather_outputs()
             
 
 
 def compile_frontmatter(pdf=False):
     cmd = (
-        PANDOC, 
+        f"{PANDOC}", 
         f'--output=front_matter.{"pdf --pdf-engine=xelatex" if pdf else "tex"}',  
         '--file-scope',
-        '--template=template-rewrite.tex',
-        '--csl=ntuthesis.cls',
+        '--template=latex/template-frontmatter.tex',
         'front_matter.md'
     )
-
-    project_root = os.getcwd()
-    try:
-        os.chdir(FRONT_MATTER_DIR)
-        sys_cmd = subprocess.run(cmd)
-    except:
-        raise Exception("Error in compiling front matter to tex")
-    finally:
-        os.chdir(project_root)
+    print(f"\nCompiling front_matter [{'.pdf' if pdf else '.tex'}]: {' '.join(cmd)}\n")
+    sys_cmd = os.system(' '.join(cmd))
 
     return sys_cmd
     
@@ -78,7 +63,7 @@ def compile_frontmatter(pdf=False):
 def compile_thesis(pdf=False):
     cmd = (
         f"{PANDOC}",
-        f'--output={"output/thesis.pdf --pdf-engine=xelatex" if pdf else "thesis.tex"}',
+        f'--output={"thesis.pdf --pdf-engine=xelatex" if pdf else "thesis.tex"}',
         "--template=latex/template.tex",
         "--include-in-header=latex/preamble-zh.tex",
         "--top-level-division=chapter",
@@ -90,34 +75,59 @@ def compile_thesis(pdf=False):
         "--filter=pandoc-shortcaption",
         "--filter=pandoc-xnos",
         f'--filter={CITEPROC}',
-        "thesis-style.yml",
-        ' '.join(sorted(str(fp.absolute()) for fp in pathlib.Path("chapters/").glob("*.md"))),
+        "thesis-setup.yml",
+        "chapters/*md",
     )
-    #sys_cmd = subprocess.run(cmd)
+    print(f"\nCompiling thesis [{'.pdf' if pdf else '.tex'}]: {' '.join(cmd)}\n")
     sys_cmd = os.system(' '.join(cmd))
 
     return sys_cmd
 
 
-def overleaf_zip():
-    deps = [
+def gather_outputs():
+    to_move = [
         "thesis.tex",
-        "front_matter/",
-        "latex/",
+        "thesis.pdf",
+        "front_matter.tex",
+        "front_matter.pdf",
+    ]
+    for fp in to_move: 
+        if os.path.exists(fp): 
+            os.rename(fp, OUTDIR / fp)
+
+    to_copy = [
+        "ntuthesis.cls",
+        "fonts/",
         "figures/"
     ]
-
-    for fp in deps:
+    for fp in to_copy:
         if os.path.isdir(fp): 
-            if not (OVERLEAF / fp).exists(): (OVERLEAF / fp).mkdir()
-            copytree(fp, OVERLEAF / fp, 
-            ignore=shutil.ignore_patterns(["**/**/template*", "**/**/preamble*", "**/**/*.sh"]))
+            if not (OUTDIR / fp).exists(): 
+                (OUTDIR / fp).mkdir()
+            copytree(fp, OUTDIR / fp)
         else:
-            shutil.copy2(fp, OVERLEAF)
+            shutil.copy2(fp, OUTDIR)
+
+    ignore = [
+        '^template',
+        '^preamble',
+        '.sh$',
+        '.md$'
+        '.pdf$',
+    ]
+    ignore = [ re.compile(x) for x in ignore ]
+    # Remove unnecessary files
+    for fp in OUTDIR.rglob("*"):
+        if fp.is_dir(): continue
+        for pat in ignore:
+            if pat.search(fp.name): fp.unlink()
+
+    outzip = "overleaf.zip"
+    if os.path.exists(OUTDIR / outzip): os.remove(OUTDIR / outzip)
+    zipdir(OUTDIR, outpath=outzip)
+    os.rename(outzip, OUTDIR / outzip)
     
-    zipdir(OVERLEAF, outpath="output/overleaf.zip")
-    os.rename("thesis.tex", "output/thesis.tex")
-    
+
 
 def get_pandoc_path():
     global PANDOC, CITEPROC
@@ -173,6 +183,14 @@ def unzip(fp):
             f.extractall(fp.parent)
 
 
+def rm(path):
+    if os.path.exists(path):
+        if os.path.isfile(path):
+            os.remove(path)
+        else:
+            shutil.rmtree(path, ignore_errors=True)
+
+
 def copytree(src, dst, symlinks=False, ignore=None):
     for item in os.listdir(src):
         s = os.path.join(src, item)
@@ -203,6 +221,5 @@ def exc_path(program):
 
 
 #%%
-
 if __name__ == "__main__":
     main()

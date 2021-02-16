@@ -1,0 +1,36 @@
+---
+two-side: true                       # Whether to start new chapter on odd pages
+secnumdepth: 2                       # section numbering at most to x.y.z
+indent: false                        # Indent new paragraph, else adds space between paragraphs 
+linestretch: 1.5                     # linestretch for body text
+linestretch-code: 1                  # linestretch for code chunks
+watermark: 'figures/watermark.png'   # ntu watermark file
+link-citations: yes                  # internal links to references
+bibliography: ref.bib
+links-as-notes: true
+geometry: a4paper, left=1.18in, right=1.18in, top=1.18in, bottom=0.787in
+subparagraph: yes
+acknowledgements-title: '誌謝'
+acknowledgements: |
+  非常感謝網路上各個默默耕耘開發 open source 專案的大大們。
+  非常感謝網路上各個默默耕耘開發 open source 專案的大大們。
+  非常感謝網路上各個默默耕耘開發 open source 專案的大大們。
+  
+  沒有這些既存的資源，這份模板是不可能出現的。沒有這些既存的資源，這份模板是不可能出現的。沒有這些既存的資源，這份模板是不可能出現的。沒有這些既存的資源，這份模板是不可能出現的。
+abstract-zh: |
+  摘要**第 1 行**開始而且不能是空行。摘要**第 1 行**開始而且不能是空行。摘要**第 1 行**開始而且不能是空行。摘要**第 1 行**開始而且不能是空行。
+  
+  新段落要在前面空一行。新段落要在前面空一行。新段落要在前面空一行。新段落要在前面空一行。新段落要在前面空一行。
+  \bigbreak
+  
+  \noindent
+  **關鍵字：** 第二行開始、R Markdown、Bookdown、可重製研究
+abstract-en: |
+  The first line of the abstract starts on **line 5** and must not be blank. The first line of the abstract starts on **line 5** and must not be blank. The first line of the abstract starts on **line 5** and must not be blank.
+  
+  A new paragraph of the abstract. A new paragraph of the abstract. A new paragraph of the abstract. A new paragraph of the abstract. A new paragraph of the abstract. A new paragraph of the abstract.
+  \bigbreak
+  
+  \noindent
+  **Keywords:** Line 2, R Markdown, Bookdown, Reproducible Research
+---

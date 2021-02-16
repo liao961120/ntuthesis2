@@ -4,6 +4,7 @@ _bookdown_files
 *.fls
 *.log
 *.aux
+*.xwm
 pandoc/*
-output/overleaf/*
+output/*
 build-test.sh
