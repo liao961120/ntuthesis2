@@ -1,3 +1,4 @@
+#%%
 import os
 import re
 import time
@@ -123,7 +124,8 @@ def compile_thesis_html():
     cmd = [
         f"{PANDOC}",
         f'--output=output/thesis.html',
-        "--include-in-header=latex/header.html",
+        "--include-in-header=html/header.html",
+        "--include-before-body=html/before-body.html",
         "--katex",
         "--top-level-division=chapter",
         "--number-sections",
@@ -134,6 +136,8 @@ def compile_thesis_html():
         "--filter=pandoc-xnos",
         f'--filter={CITEPROC}',
         "--metadata-file=thesis-setup.yml",
+        '--metadata lang="zh-TW"',
+        '--metadata title="Thesis"',
         "chapters/*.md",
     ]
     print(f"\nCompiling thesis [html]: {' '.join(cmd)}\n")
@@ -152,14 +156,16 @@ def gather_outputs():
         "ntuthesis.cls",
         "fonts/",
         "figures/",
-        "latex/custom.css"
+        "html/",
     ]
     for fp in to_copy:
         if os.path.isdir(fp): 
-            if not (OUTDIR / fp).exists(): 
-                (OUTDIR / fp).mkdir()
+            if (OUTDIR / fp).exists(): 
+                rm((OUTDIR / fp))
+            (OUTDIR / fp).mkdir()
             copytree(fp, OUTDIR / fp)
         else:
+            # pathlib.Path(OUTDIR / fp).parent.mkdir(exist_ok=True)
             shutil.copy2(fp, OUTDIR)
 
     ignore = [
