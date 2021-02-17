@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-TW" xml:lang="zh-TW">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>01-intro</title>
+  <title>Thesis</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -78,9 +78,30 @@
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
-  <link rel="stylesheet" href="custom.css">
+  <!-- <link rel="stylesheet" href="html/custom.css"> -->
+  <!-- <link href="html/tufte-fonts.css" rel="stylesheet" /> -->
+  <!-- <link href="html/tufte-background.css" rel="stylesheet" /> -->
+  <!-- <link href="html/tufte-italics.css" rel="stylesheet" /> -->
+  <!-- <link href="html/tufte.css" rel="stylesheet" /> -->
+  <link rel="stylesheet" href="html/custom.css">
+  <title>Thesis</title>
 </head>
 <body>
+<div class="nav external">
+    <span>
+        <a href="https://yongfu.name/ntuthesis2/">Docs</a> 
+    </span>
+    <span>
+        <a href="https://github.com/liao961120/ntuthesis2">GitHub</a>   
+    </span>
+</div>
+
+
+<a id="to-top" onclick="document.documentElement.scrollTop = 0;">▲</button>
+<a id="to-bottom" onclick="window.scrollTo(0, document.body.scrollHeight);">▼</button>
+<header id="title-block-header">
+<h1 class="title">Thesis</h1>
+</header>
 <nav id="TOC" role="doc-toc">
 <ul>
 <li><a href="#簡介"><span class="toc-section-number">1</span> 簡介</a>
@@ -218,30 +239,30 @@
 <thead>
 <tr class="header">
 <th style="text-align: center;"></th>
-<th style="text-align: center;">定義</th>
-<th>引用</th>
+<th>定義</th>
+<th style="text-align: center;">引用</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">段落</td>
-<td style="text-align: center;"><code>Section Two {#sec:2}</code></td>
-<td><code>@sec:id</code></td>
+<td><code>Section Two {#sec:2}</code></td>
+<td style="text-align: center;"><code>@sec:id</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">圖片</td>
-<td style="text-align: center;"><code>![Caption.](image.png){#fig:id}</code></td>
-<td><code>@fig:id</code></td>
+<td><code>![Caption.](image.png){#fig:id}</code></td>
+<td style="text-align: center;"><code>@fig:id</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">公式</td>
-<td style="text-align: center;"><code>$$ y = mx + b $$ {#eq:id}</code></td>
-<td><code>@eq:id</code></td>
+<td><code>$$ y = mx + b $$ {#eq:id}</code></td>
+<td style="text-align: center;"><code>@eq:id</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">表格</td>
-<td style="text-align: center;"><code>Table: Caption. {#tbl:id}</code></td>
-<td><code>@tbl:id</code></td>
+<td><code>Table: Caption. {#tbl:id}</code></td>
+<td style="text-align: center;"><code>@tbl:id</code></td>
 </tr>
 </tbody>
 </table>
@@ -273,35 +294,35 @@
 <thead>
 <tr class="header">
 <th style="text-align: center;"></th>
-<th style="text-align: center;">內文</th>
+<th>內文</th>
 <th>輸出 (根據 <code>.csl</code> 改變)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">單篇</td>
-<td style="text-align: center;"><code>[@stanford2008]</code></td>
+<td><code>[@stanford2008]</code></td>
 <td><span class="citation" data-cites="stanford2008">(Stanford, <a href="#ref-stanford2008" role="doc-biblioref">2008</a>)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">多篇</td>
-<td style="text-align: center;"><code>[@stanford2008; @kassin2017]</code></td>
+<td><code>[@stanford2008; @kassin2017]</code></td>
 <td><span class="citation" data-cites="stanford2008 kassin2017">(Kassin, Fein, &amp; Markus, <a href="#ref-kassin2017" role="doc-biblioref">2017</a>; Stanford, <a href="#ref-stanford2008" role="doc-biblioref">2008</a>)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">文內引用</td>
-<td style="text-align: center;"><code>@stanford2008 says ...</code></td>
+<td><code>@stanford2008 says ...</code></td>
 <td><span class="citation" data-cites="stanford2008">Stanford (<a href="#ref-stanford2008" role="doc-biblioref">2008</a>)</span> says …</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">隱藏作者</td>
-<td style="text-align: center;"><code>Stanford says ... [-@stanford2008]</code></td>
+<td><code>Stanford says ... [-@stanford2008]</code></td>
 <td>Stanford says … <span class="citation" data-cites="stanford2008">(<a href="#ref-stanford2008" role="doc-biblioref">2008</a>)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">其它註解</td>
-<td style="text-align: center;"><code>see @kassin2017, pp. 33-35</code></td>
-<td>see <span class="citation" data-cites="kassin2017">Kassin et al. (<a href="#ref-kassin2017" role="doc-biblioref">2017</a>)</span>, pp. 33-35</td>
+<td><code>see @kassin2017, pp. 33-35</code></td>
+<td>see <span class="citation" data-cites="kassin2017">Kassin 等 (<a href="#ref-kassin2017" role="doc-biblioref">2017</a>)</span>, pp. 33-35</td>
 </tr>
 </tbody>
 </table>
@@ -315,10 +336,10 @@
 <h1 class="unnumbered" data-number="" id="sec:references">參考文獻</h1>
 <div id="refs" class="references hanging-indent" role="doc-bibliography">
 <div id="ref-kassin2017">
-<p>Kassin, S., Fein, S., &amp; Markus, H. R. (2017). <em>Social Psychology</em> (10th ed.). Boston: Cengage Learning.</p>
+<p>Kassin, S., Fein, S., &amp; Markus, H. R. (作者). (2017). <em>Social Psychology</em> (10 本). Boston: Cengage Learning.</p>
 </div>
 <div id="ref-stanford2008">
-<p>Stanford, J. N. (2008). Child dialect acquisition: New perspectives on parent/peer influence1. <em>Journal of Sociolinguistics</em>, <em>12</em>(5), 567–596. <a href="https://doi.org/10.1111/j.1467-9841.2008.00383.x">https://doi.org/10.1111/j.1467-9841.2008.00383.x</a></p>
+<p>Stanford, J. N. (作者). (2008). Child Dialect Acquisition: New Perspectives on Parent/Peer Influence1. <em>Journal of Sociolinguistics</em>, <em>12</em>(5), 567–596. <a href="https://doi.org/10.1111/j.1467-9841.2008.00383.x">https://doi.org/10.1111/j.1467-9841.2008.00383.x</a></p>
 </div>
 </div>
 <section class="footnotes" role="doc-endnotes">

@@ -1,3 +1,61 @@
+html {
+    scroll-behavior: smooth;
+}
+
+header {
+    display: none;
+}
+
+div.nav {
+    position: fixed;
+    display: block;
+    right: 1.2%;
+}
+div.external {
+    width: 2.8em;
+    top: 1.2%;
+}
+div.scroll {
+    width: 1.2em;
+    bottom: 1.2%;
+}
+a#to-top, a#to-bottom {
+    position: fixed;
+    background: rgb(121, 121, 121);
+    color: rgb(245, 245, 245);
+    font-size: 19px;
+    right: 1.2%;
+}
+a#to-top:hover, a#to-bottom:hover {
+    background: rgb(88, 88, 88);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+a#to-top {
+    bottom: 40px;
+} 
+a#to-bottom {
+    bottom: 15px;
+} 
+div.nav > span {
+    display: block;
+    width: 100%;
+    margin: 4px 0;
+    padding: 2px;
+    text-align: center;
+    background: rgb(80, 80, 80);
+}
+div.nav span > a {
+    font-size: 0.75em;
+    color: white;
+    text-decoration: none;
+}
+div.nav span > a:hover {
+    text-decoration: underline;
+}
+
 body {
     width: 75%;
     display: block;
