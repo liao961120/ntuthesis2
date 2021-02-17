@@ -7,6 +7,7 @@ linestretch-code: 1                  # linestretch for code chunks
 watermark: 'figures/watermark.png'   # ntu watermark file
 link-citations: yes                  # internal links to references
 bibliography: ref.bib
+csl: cite-style.csl
 links-as-notes: true
 geometry: a4paper, left=1.18in, right=1.18in, top=1.18in, bottom=0.787in
 subparagraph: yes
@@ -24,7 +25,7 @@ abstract-zh: |
   \bigbreak
   
   \noindent
-  **關鍵字：** 第二行開始、R Markdown、Bookdown、可重製研究
+  **關鍵字：** 第二行開始、Markdown、Pandoc、LaTeX、Overleaf、簡約
 abstract-en: |
   The first line of the abstract starts on **line 5** and must not be blank. The first line of the abstract starts on **line 5** and must not be blank. The first line of the abstract starts on **line 5** and must not be blank.
   
@@ -32,5 +33,5 @@ abstract-en: |
   \bigbreak
   
   \noindent
-  **Keywords:** Line 2, R Markdown, Bookdown, Reproducible Research
+  **Keywords:** Line 2, Markdown, Pandoc, LaTeX, Overleaf, Minimalism
 ---

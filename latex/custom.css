@@ -1,0 +1,70 @@
+body {
+    width: 75%;
+    display: block;
+    margin: 15px auto;
+    padding: 0 auto;
+}
+
+header {
+    text-align: center;
+}
+
+div.sourceCode {
+    border-radius: 6.5px;
+    background: rgba(200, 200, 200, 0.35);
+    padding: 0.35em 0.5em;
+}
+
+:not(.sourceCode) pre {
+    padding: 0.1em 0.55em;
+}
+
+img {
+    width: 100%;
+}
+
+/* Table */
+
+table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Paged.js */
+
+/* 
+@page {
+    size: 210mm 297mm;
+    margin-top: 10mm;
+    margin-right: 20mm;
+    margin-bottom: 25mm;
+    margin-left: 15mm;
+  
+    @bottom-center {
+      content: counter(page);
+    }
+  
+  } 
+*/

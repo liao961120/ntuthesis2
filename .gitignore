@@ -7,4 +7,5 @@ _bookdown_files
 *.xwm
 pandoc/*
 output/*
+!output/front_matter.pdf
 build-test.sh

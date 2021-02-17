@@ -49,16 +49,20 @@ def main():
             if mode == "overleaf":
                 compile_frontmatter(pdf=False)
                 compile_thesis(pdf=False, lang=lang)
+                print(f'\n[OUTPUT] {OUTDIR / "overleaf.zip"}\n')
             elif mode == "html":
                 compile_thesis_html()
+                print(f'\n[OUTPUT] {OUTDIR / "thesis.html"}\n')
             elif mode == "pdf":
                 target = input("\n\t[USER] Which to output [thesis / front_matter] > ")
                 target = target.strip().lower()
 
                 if target.startswith("thesis"):
                     compile_thesis(pdf=True, lang=lang)
+                    print(f'\n[OUTPUT] {OUTDIR / "thesis.pdf"}\n')
                 elif target.startswith("front"):
                     compile_frontmatter(pdf=True)
+                    print(f'\n[OUTPUT] {OUTDIR / "front_matter.pdf"}\n')
                 else: continue
             elif mode == "exit": return 
             else: 

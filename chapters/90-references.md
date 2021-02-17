@@ -1,3 +1,4 @@
 \renewcommand{\href}{\oldhref}
 
-# 參考資料 {- #references}
+參考文獻 {#sec:references}
+=========================
