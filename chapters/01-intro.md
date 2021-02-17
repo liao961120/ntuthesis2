@@ -1,7 +1,7 @@
 簡介
 ========================
 
-`ntuthesis2` 是透過 [Pandoc](https://github.com/jgm/pandoc) 建立的論文模板，讓使用者能透過 (Pandoc) **Markdown** 語法撰寫論文 (無須安裝與了解 LaTeX!!)。此專案的前身是 [R 套件](https//github.com/liao961120/ntuthesis)，但由於 R + Bookdown + LaTeX 的設定相對龐雜，對非 R 的使用者而言有相當難度，因此改以 Python 3 + Pandoc 實作 (這兩者在 Windows 與 Unix 上的安裝都相當容易)，希望讓更多人能夠使用。
+`ntuthesis2` 是透過 [Pandoc](https://github.com/jgm/pandoc) 建立的論文模板，讓使用者能透過 (Pandoc) **Markdown** 語法撰寫論文 (無須安裝與了解 LaTeX!!)。此專案的前身是 [R 套件](https://github.com/liao961120/ntuthesis)，但由於 R + Bookdown + LaTeX 的設定相對龐雜，對非 R 的使用者而言有相當難度，因此改以 Python 3 + Pandoc 實作 (這兩者在 Windows 與 Unix 上的安裝都相當容易)，希望讓更多人能夠使用。
 
 輸出範例：
 
