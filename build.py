@@ -1,5 +1,3 @@
-# ToDo: Separate tex and pdf compile (md --> tex --> pdf), not direct compile pdf
-
 import os
 import re
 import time
@@ -8,6 +6,7 @@ import zipfile
 import platform
 import pathlib
 import itertools
+import subprocess
 import urllib.request
 
 
@@ -26,79 +25,130 @@ PANDOC_DIR.mkdir(exist_ok=True)
 
 
 def main():
-    if get_pandoc_path() != None:
+    if get_pandoc_path() == None:
+        print(f"Downloading pandoc {PANDOC_VERSION}...")
         fp, _ = download_pandoc()
         unzip(fp)
         get_pandoc_path()
     
-    # Compile to tex
-    compile_frontmatter(pdf=False)
-    compile_thesis(pdf=False)
+    while True:
+        mode = input("\n[USER] Select output format [html / pdf / overleaf / exit] > ")
+        mode = mode.strip().lower()
 
-    # Compile to pdf
-    if exc_path("tlmgr") != None:
-        compile_frontmatter(pdf=True)
-        time.sleep(5)
-        compile_thesis(pdf=True)
+        try:
+            if mode == "overleaf" or mode == "pdf":
+                lang = ""
+                while lang != "en" and  lang != "zh":
+                    lang = input("\n\t[USER] Select language [chinese / english] > ")
+                    lang = lang.strip().lower()
+                    if lang.startswith("en"):
+                        lang = "en"
+                    elif lang.startswith("ch") or lang.startswith("zh"):
+                        lang = "zh"
 
-    # Create zip file for overlead upload
-    gather_outputs()
+            if mode == "overleaf":
+                compile_frontmatter(pdf=False)
+                compile_thesis(pdf=False, lang=lang)
+            elif mode == "html":
+                compile_thesis_html()
+            elif mode == "pdf":
+                target = input("\n\t[USER] Which to output [thesis / front_matter] > ")
+                target = target.strip().lower()
+
+                if target.startswith("thesis"):
+                    compile_thesis(pdf=True, lang=lang)
+                elif target.startswith("front"):
+                    compile_frontmatter(pdf=True)
+                else: continue
+            elif mode == "exit": return 
+            else: 
+                continue
+
+            gather_outputs()
+        except:
+            print(f"\n[WARNING]: Failed to compile to {mode}!\n")
+
             
 
 
 def compile_frontmatter(pdf=False):
+    tmp_md = tempfile("tmp.md")
     cmd = (
         f"{PANDOC}", 
-        f'--output=front_matter.{"pdf --pdf-engine=xelatex" if pdf else "tex"}',  
+        f'--output=output/{"front_matter.pdf" if pdf else "front_matter.tex"}',
+        "--pdf-engine=xelatex",
         '--file-scope',
         '--template=latex/template-frontmatter.tex',
-        'front_matter.md'
+        '--metadata-file=front_matter.yml',
+        f'{tmp_md}'
     )
-    print(f"\nCompiling front_matter [{'.pdf' if pdf else '.tex'}]: {' '.join(cmd)}\n")
-    sys_cmd = os.system(' '.join(cmd))
+    print(f"\nCompiling front_matter [{'pdf' if pdf else 'tex'}]: {' '.join(cmd)}\n")
+    #sys_cmd = os.system(' '.join(cmd))
+    sys_cmd = subprocess.check_call(cmd)
+    os.remove(tmp_md)
 
     return sys_cmd
     
 
-def compile_thesis(pdf=False):
-    cmd = (
+def compile_thesis(pdf=False, lang="zh"):
+    cmd = [
         f"{PANDOC}",
-        f'--output={"thesis.pdf --pdf-engine=xelatex" if pdf else "thesis.tex"}',
+        f'--output=output/{"thesis.pdf" if pdf else "thesis.tex"}',
+        "--pdf-engine=xelatex",
         "--template=latex/template.tex",
-        "--include-in-header=latex/preamble-zh.tex",
+        f"--include-in-header=latex/preamble-{lang}.tex",
         "--top-level-division=chapter",
-        "--bibliography=ref.bib",
-        "--csl=cite-style.csl",
         "--number-sections",
+        "--file-scope",
         "--verbose",
         "--toc",
         "--filter=pandoc-shortcaption",
         "--filter=pandoc-xnos",
         f'--filter={CITEPROC}',
-        "thesis-setup.yml",
+        "--metadata-file=thesis-setup.yml",
         "chapters/*md",
-    )
-    print(f"\nCompiling thesis [{'.pdf' if pdf else '.tex'}]: {' '.join(cmd)}\n")
-    sys_cmd = os.system(' '.join(cmd))
+    ]
+    print(f"\nCompiling thesis [{'pdf' if pdf else 'tex'}]: {' '.join(cmd)}\n")
+    status = os.system(' '.join(cmd))
+    if status != 0: raise Exception(f"Error: {status}. Failed to compile to {cmd[1]}")
 
-    return sys_cmd
+    return status
 
+
+def compile_thesis_html():
+    cmd = [
+        f"{PANDOC}",
+        f'--output=output/thesis.html',
+        "--include-in-header=latex/header.html",
+        "--katex",
+        "--top-level-division=chapter",
+        "--number-sections",
+        "--file-scope",
+        "--verbose",
+        "--toc",
+        "--filter=pandoc-shortcaption",
+        "--filter=pandoc-xnos",
+        f'--filter={CITEPROC}',
+        "--metadata-file=thesis-setup.yml",
+        "chapters/*.md",
+    ]
+    print(f"\nCompiling thesis [html]: {' '.join(cmd)}\n")
+    status = os.system(' '.join(cmd))
+    if status != 0: raise Exception(f"Error: {status}. Failed to compile to {cmd[1]}")
+
+    return status
+
+def tempfile(name="temp.md"):
+    with open(name, "w") as f:
+        f.write("\n")
+    return str(pathlib.Path(name).absolute())
 
 def gather_outputs():
-    to_move = [
-        "thesis.tex",
-        "thesis.pdf",
-        "front_matter.tex",
-        "front_matter.pdf",
-    ]
-    for fp in to_move: 
-        if os.path.exists(fp): 
-            os.rename(fp, OUTDIR / fp)
-
     to_copy = [
         "ntuthesis.cls",
         "fonts/",
-        "figures/"
+        "figures/",
+        "latex/custom.css"
     ]
     for fp in to_copy:
         if os.path.isdir(fp): 
@@ -114,6 +164,14 @@ def gather_outputs():
         '.sh$',
         '.md$'
         '.pdf$',
+        '.fdb_latexmk$',
+        'front_matter.pdf --pdf-engine=xelatex',
+        '.gz$',
+        '.out$',
+        '.log$',
+        '.aux$',
+        '.xwm$',
+        '.fls$'
     ]
     ignore = [ re.compile(x) for x in ignore ]
     # Remove unnecessary files
