@@ -9,3 +9,4 @@ pandoc/*
 output/*
 !output/front_matter.pdf
 build-test.sh
+__pycache__
