@@ -10,3 +10,5 @@ output/*
 !output/front_matter.pdf
 build-test.sh
 __pycache__
+overleaf.zip
+docs/fonts*
