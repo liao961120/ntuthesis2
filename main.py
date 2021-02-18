@@ -2,13 +2,9 @@
 import os
 import re
 import time
-import shutil
-import zipfile
-import platform
 import pathlib
 import itertools
 import subprocess
-import urllib.request
 from utils.files import *
 from utils.pandoc import Pandoc
 
@@ -16,25 +12,13 @@ from utils.pandoc import Pandoc
 #PANDOC_VERSION = '2.8.1'
 PANDOC_DIR = pathlib.Path('./pandoc')
 PANDOC_DIR.mkdir(exist_ok=True)
-#PANDOC, CITEPROC = None, None
-# PANDOC_ZIP = {
-#     'Linux': "linux-amd64.tar.gz",
-#     'Darwin': "macOS.zip",
-#     'Windows': "windows-x86_64.zip"
-# }
-# PLATFORM = platform.system()
-OUTDIR = pathlib.Path('output/')
+
+OUTDIR = pathlib.Path('docs/')
 OUTDIR.mkdir(exist_ok=True)
 
 pandoc = Pandoc(PANDOC_DIR)
 
 def main():
-    # if get_pandoc_path() == None:
-    #     print(f"Downloading pandoc {PANDOC_VERSION}...")
-    #     fp, _ = download_pandoc()
-    #     unzip(fp)
-    #     get_pandoc_path()
-    
     while True:
         mode = input("\n[USER] Select output format [html / pdf / overleaf / exit] > ")
         mode = mode.strip().lower()
@@ -83,7 +67,7 @@ def compile_frontmatter(pdf=False):
     tmp_md = tempfile("tmp.md")
     cmd = (
         f"{pandoc.PANDOC}", 
-        f'--output=output/{"front_matter.pdf" if pdf else "front_matter.tex"}',
+        f'--output={OUTDIR / "front_matter.pdf" if pdf else "front_matter.tex"}',
         "--pdf-engine=xelatex",
         '--file-scope',
         '--template=latex/template-frontmatter.tex',
@@ -101,7 +85,7 @@ def compile_frontmatter(pdf=False):
 def compile_thesis(pdf=False, lang="zh"):
     cmd = [
         f"{pandoc.PANDOC}",
-        f'--output=output/{"thesis.pdf" if pdf else "thesis.tex"}',
+        f'--output={OUTDIR / "thesis.pdf" if pdf else "thesis.tex"}',
         "--pdf-engine=xelatex",
         "--template=latex/template.tex",
         f"--include-in-header=latex/preamble-{lang}.tex",
@@ -112,6 +96,7 @@ def compile_thesis(pdf=False, lang="zh"):
         "--toc",
         "--filter=pandoc-shortcaption",
         "--filter=pandoc-xnos",
+        f"--variable frontmatter={OUTDIR / 'front_matter.pdf'}",
         f'{"--citeproc" if pandoc.CITEPROC is None else "--filter=" + pandoc.CITEPROC}',
         "--metadata-file=thesis-setup.yml",
         "chapters/*md",
@@ -126,7 +111,7 @@ def compile_thesis(pdf=False, lang="zh"):
 def compile_thesis_html():
     cmd = [
         f"{pandoc.PANDOC}",
-        f'--output=output/thesis.html',
+        f'--output={OUTDIR / "thesis.html"}',
         "--include-in-header=html/header.html",
         "--include-before-body=html/before-body.html",
         "--katex",
