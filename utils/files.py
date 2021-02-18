@@ -1,12 +1,15 @@
+import os
+import shutil
 import zipfile
 import tarfile
 import pathlib
+import platform
 
 
 def unzip(fp):
     fp = pathlib.Path(fp)
 
-    if PLATFORM == 'Linux':
+    if platform.system() == 'Linux':
         import tarfile
         with tarfile.open(fp) as f:
             f.extractall(fp.parent)
