@@ -63,7 +63,7 @@
 ├── fonts/                 # 字體檔
 ├── latex/                 # 模板
 ├── pandoc/                # Pandoc 執行檔 (程式會自動下載)
-├── output/                # 輸出論文 (PDF/HTML/Overleaf)
+├── docs/                  # 輸出論文 (PDF/HTML/Overleaf)
 ├── ntuthesis.cls          # LaTeX 格式設定 (論文封面)
 ├── requirements.txt       # Python dependencies
 ├── main.py                # 互動式主程式 (安裝 Pandoc、輸出論文)
@@ -83,7 +83,7 @@
                 [USER] Select language [chinese / english] > english
                 [USER] Which to output [thesis / front_matter] > front_matter
             ...
-            [OUTPUT] output/front_matter.pdf
+            [OUTPUT] docs/front_matter.pdf
             ```
 
         - 若**無 LaTeX**，
@@ -94,14 +94,14 @@
                 [USER] Select output format [html / pdf / overleaf / exit] > overleaf
                     [USER] Select language [chinese / english] > english
                 ...
-                [OUTPUT] output/overleaf.zip
+                [OUTPUT] docs/overleaf.zip
                 ```
             
             2. 這時便可將 `output/overleaf.zip` 上傳至 [Overleaf](https://overleaf.com) (需註冊帳號)
                 1. 上傳之後，Overleaf 會自動解壓展開檔案，請點選 `front_matter.tex` (這時自動 Compile 應會失敗)
                 2. 點選左方 Menu，Compiler 選擇 `XeLaTeX` (見下圖 @fig:overleaf)
                 3. 點選畫面左上方 `Recompile`
-                4. 輸出完成後，下載 PDF 檔 (`Recompile` 右側的下載鍵) 至 `output/` 並將檔名命名為 `front_matter.pdf`
+                4. 輸出完成後，下載 PDF 檔 (`Recompile` 右側的下載鍵) 至 `docs/` 並將檔名命名為 `front_matter.pdf`
 2. 輸出完整論文
     1. 編輯論文：
         - 在 `thesis-setup.yml` 設定論文相關格式、撰寫摘要、謝辭
@@ -116,14 +116,14 @@
                 [USER] Select language [chinese / english] > english
                 [USER] Which to output [thesis / front_matter] > thesis
             ...
-            [OUTPUT] output/thesis.pdf
+            [OUTPUT] docs/thesis.pdf
             ```
 
         - 若**無 LaTeX**，
             1. 請依照上方**輸出封面**的方式操作主程式
-            2. 將 `output/overleaf.zip` 上傳至 [Overleaf](https://overleaf.com) 後，
+            2. 將 `docs/overleaf.zip` 上傳至 [Overleaf](https://overleaf.com) 後，
                 1. 點選 `thesis.tex`，並將 Compiler 設為 `XeLaTeX`
-                2. 點選左上方新增資料夾 (New Folder) `output` 並將 `front_matter.pdf` 放入 `output/`
+                2. 點選左上方新增資料夾 (New Folder) `docs` 並將 `front_matter.pdf` 放入 `docs/`
                 3. Recompile 後下載輸出的 PDF 檔
 
 
