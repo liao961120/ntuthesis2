@@ -3,3 +3,5 @@ pandoc-eqnos
 pandoc-tablenos
 pandoc-secnos
 pandoc-shortcaption
+yaml
+bs4

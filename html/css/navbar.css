@@ -1,0 +1,61 @@
+/*
+ * Stylesheet controlling the behavior and look of the collapsible side panel.
+ */
+
+#collapsiblemenu {
+  position:fixed;
+  left: 0px;
+  top: 0px;
+  width:300px;
+  z-index:99;
+}
+
+@media (max-width: 860px) {
+  #collapsiblemenu {
+     display: none;
+  }
+}
+
+#collapsiblemenu .collapsible {
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  background:none;
+}
+
+#collapsiblemenu .active {
+  background-color: #f1f1f1;
+}
+
+
+#collapsiblemenu ul, #collapsiblemenu li {
+  margin-top:0;
+  padding-top:0;
+  width:250px;
+}
+
+#collapsiblemenu .content {
+  margin-left:-20px;
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+  border-bottom-right-radius: 25px;
+}
+
+#collapsiblemenu .shortthickbar {
+  width: 35px;
+  height: 5px;
+  background-color: #333;
+  margin: 6px 0;
+  border-radius:3px;
+}
+
+#collapsiblemenu ul > li > ul {
+  display:none;
+}

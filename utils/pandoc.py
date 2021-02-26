@@ -1,6 +1,6 @@
-import urllib.request
 import pathlib
 import platform
+import urllib.request
 from .files import unzip
 
 class Pandoc:
@@ -46,6 +46,7 @@ class Pandoc:
         else:
             self.CITEPROC = str(self.CITEPROC[0].absolute())
 
+
     def download_pandoc(self, version):
         binary = self.PANDOC_ZIP[self.PLATFORM]
         url = f'https://github.com/jgm/pandoc/releases/download/{version}/pandoc-{version}-{binary}'
@@ -55,6 +56,7 @@ class Pandoc:
         else:
             outpath = self.PANDOC_DIR / "pandoc.zip"
         # Download the file from `url` and save it locally under `file_name`:
+        print(f"Dowloading pandoc {version} to {outpath.absolute()}")
         outfile, header = urllib.request.urlretrieve(url, outpath)
         unzip(outfile)
         self._get_pandoc_path()
