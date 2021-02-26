@@ -9,7 +9,6 @@ from utils.files import *
 from utils.pandoc import Pandoc
 
 
-#PANDOC_VERSION = '2.8.1'
 PANDOC_DIR = pathlib.Path('./pandoc')
 PANDOC_DIR.mkdir(exist_ok=True)
 
@@ -39,8 +38,8 @@ def main():
                 compile_thesis(pdf=False, lang=lang)
                 print(f'\n[OUTPUT] {OUTDIR / "overleaf.zip"}\n')
             elif mode == "html":
-                compile_thesis_html()
-                print(f'\n[OUTPUT] {OUTDIR / "thesis.html"}\n')
+                compile_thesis_html_tufte()
+                print(f'\n[OUTPUT] {OUTDIR / "index.html"}\n')
             elif mode == "pdf":
                 target = input("\n\t[USER] Which to output [thesis / front_matter] > ")
                 target = target.strip().lower()
@@ -108,7 +107,12 @@ def compile_thesis(pdf=False, lang="zh"):
     return status
 
 
-def compile_thesis_html():
+def compile_thesis_html_tufte():
+    from make import make_html
+    print(f"\nCompiling thesis [html]")
+    make_html()
+
+def compile_thesis_html_rawform():
     cmd = [
         f"{pandoc.PANDOC}",
         f'--output={OUTDIR / "thesis.html"}',
@@ -128,7 +132,6 @@ def compile_thesis_html():
         '--metadata title="Thesis"',
         "chapters/*.md",
     ]
-    print(f"\nCompiling thesis [html]: {' '.join(cmd)}\n")
     status = os.system(' '.join(cmd))
     if status != 0: raise Exception(f"Error: {status}. Failed to compile to {cmd[1]}")
 
