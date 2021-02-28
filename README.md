@@ -192,4 +192,4 @@ Table: 文獻引用語法. {#tbl:citation}
 --------------------
 
 - LaTeX 模板的封面是根據 [tzhuan/ntu-thesis](https://github.com/tzhuan/ntu-thesis) 修改而成
-- HTML (Tufte) 模板是根據 [`mrtzh/unbuch`](https://github.com/mrtzh/unbuch) [修改](https://github.com/liao961120/pandoc-tufte-book)而成
+- HTML (Tufte) 模板是根據 [mrtzh/unbuch](https://github.com/mrtzh/unbuch) [修改](https://github.com/liao961120/pandoc-tufte-book)而成
