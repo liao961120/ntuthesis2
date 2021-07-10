@@ -66,7 +66,7 @@ def compile_frontmatter(pdf=False):
     tmp_md = tempfile("tmp.md")
     cmd = (
         f"{pandoc.PANDOC}", 
-        f'--output={OUTDIR / "front_matter.pdf" if pdf else "front_matter.tex"}',
+        f'--output={OUTDIR / "front_matter.pdf" if pdf else OUTDIR / "front_matter.tex"}',
         "--pdf-engine=xelatex",
         '--file-scope',
         '--template=latex/template-frontmatter.tex',
@@ -84,7 +84,7 @@ def compile_frontmatter(pdf=False):
 def compile_thesis(pdf=False, lang="zh"):
     cmd = [
         f"{pandoc.PANDOC}",
-        f'--output={OUTDIR / "thesis.pdf" if pdf else "thesis.tex"}',
+        f'--output={OUTDIR / "thesis.pdf" if pdf else OUTDIR / "thesis.tex"}',
         "--pdf-engine=xelatex",
         "--template=latex/template.tex",
         f"--include-in-header=latex/preamble-{lang}.tex",
@@ -95,7 +95,7 @@ def compile_thesis(pdf=False, lang="zh"):
         "--toc",
         "--filter=pandoc-shortcaption",
         "--filter=pandoc-xnos",
-        f"--variable frontmatter={OUTDIR / 'front_matter.pdf'}",
+        f"--variable frontmatter={OUTDIR / 'front_matter.pdf' if pdf else 'front_matter.pdf'}",
         f'{"--citeproc" if pandoc.CITEPROC is None else "--filter=" + pandoc.CITEPROC}',
         "--metadata-file=thesis-setup.yml",
         "chapters/*md",
