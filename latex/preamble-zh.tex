@@ -30,7 +30,11 @@
 ]{Monego}
 
 % Trad Ch font-family
+\usepackage{xeCJK}
+%% enable fallback font feature
+\xeCJKsetup{AutoFallBack}
 \setCJKmainfont[Path=fonts/,AutoFakeBold=2.5,AutoFakeSlant=.3]{kaiti}
+\setCJKmainfont[Path=fonts/,FallBack]{HanaMinB}
 \setCJKmonofont[Path=fonts/]{NotoSansMonoCJKtc}
 
 % Special font: IPA
