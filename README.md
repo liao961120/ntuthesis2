@@ -1,3 +1,5 @@
+**DEPRECATED**: Use [**liao961120/thesis**](https://github.com/liao961120/thesis) instead
+
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 
